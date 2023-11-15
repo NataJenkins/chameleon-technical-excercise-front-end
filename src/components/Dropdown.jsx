@@ -1,14 +1,20 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
-// import { httpGet, httpPatch } from "lib/http";
+import { httpGet, httpPatch } from "lib/http";
 import "./Dropdown.css";
 
-export const Dropdown = ({ label, items }) => {
+export const Dropdown = ({ label, items, user, key }) => {
     const [isOpen, setIsOpen] = useState(false);
+    const [value, setValue] = useState(null);
 
-    // httpGet(`users/${userId}`).then((d) => {
-    //     setIsOpen(user[`dropdown_${name}`]);
-    // });
+    httpGet(`users/${user}`).then((d) => {
+        setIsOpen(user[`dropdown_${key}`]);
+    });
+
+    const onChange = (item) => {
+        setValue(item);
+        httpPatch("user", { [`menu-state-${name}`]: { [item]: true } });
+    };
 
     const onToggle = () => {
         setIsOpen(!isOpen);
@@ -37,7 +43,11 @@ export const Dropdown = ({ label, items }) => {
                     {items.map((item) => {
                         return (
                             <li key={item.id}>
-                                <DropdownItem key={item.id} href={item.href}>
+                                <DropdownItem
+                                    key={item.id}
+                                    href={item.href}
+                                    onSelect={() => onChange(item.label)}
+                                >
                                     {item.label}
                                 </DropdownItem>
                             </li>
@@ -58,13 +68,20 @@ Dropdown.propTypes = {
         })
     ),
     label: PropTypes.string,
+    key: PropTypes.string,
+    user: PropTypes.string,
 };
 
-const DropdownItem = ({ children, href }) => {
-    return <a href={href}>{children}</a>;
+const DropdownItem = ({ children, href, onSelect }) => {
+    return (
+        <div onClick={onSelect}>
+            <a href={href}>{children}</a>
+        </div>
+    );
 };
 
 DropdownItem.propTypes = {
     children: PropTypes.any,
     href: PropTypes.string,
+    onSelect: PropTypes.func,
 };
