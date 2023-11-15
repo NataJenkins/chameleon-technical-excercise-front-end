@@ -1,0 +1,20 @@
+.dropdown {
+    max-width: 300px;
+}
+.dropdown-menu {
+    max-height: 0px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.dropdown-menu.dropdown-open {
+    min-height: 30px;
+    max-height: 100px;
+    height: auto;
+    transition: all 0.3s ease;
+    overflow-y: auto;
+}
+ul {
+    list-style-type: none;
+    padding: 0;
+}

@@ -1,15 +1,17 @@
-import React, { useState } from "react";
-import { httpGet, httpPatch } from "lib/http";
+import { useState } from "react";
+import PropTypes from "prop-types";
+// import { httpGet, httpPatch } from "lib/http";
+import "./Dropdown.css";
 
-export const Dropdown = ({ label }) => {
+export const Dropdown = ({ label, items }) => {
     const [isOpen, setIsOpen] = useState(false);
 
-    httpGet(`users/${userId}`).then((d) => {
-        setIsOpen(user[`dropdown_${name}`]);
-    });
+    // httpGet(`users/${userId}`).then((d) => {
+    //     setIsOpen(user[`dropdown_${name}`]);
+    // });
 
-    const onToggle = (e) => {
-        setIsOpen(isOpen);
+    const onToggle = () => {
+        setIsOpen(!isOpen);
     };
 
     return (
@@ -20,12 +22,11 @@ export const Dropdown = ({ label }) => {
                     className="dropdown-button"
                     id="dropdownButton"
                     aria-haspopup="true"
-                    aria-expended={isOpen}
-                    onClick={onTggle}
+                    aria-expanded={isOpen}
+                    onClick={onToggle}
                 >
                     {label}
                 </button>
-
                 <ul
                     className={`${
                         isOpen ? "dropdown-open" : ""
@@ -33,27 +34,37 @@ export const Dropdown = ({ label }) => {
                     aria-labelledby="dropdownButton"
                     role="menu"
                 >
-                    <div>Items</div>
-                    <a href="/page1">Page 1</a>
-                    <DropdownItem href="/page2">Page 2</DropdownItem>
-                    <DropdownItem href="/page3">Page 3</DropdownItem>
-                    <DropdownItem href="/page4">Page 4</DropdownItem>
-                </ul>
-
-                <ul
-                    className={`${
-                        isOpen ? "dropdown-open" : ""
-                    } dropdown-menu dropdown-section`}
-                >
-                    <div>More items</div>
-                    <DropdownItem href="/page5">Page 5</DropdownItem>
-                    <DropdownItem href="/page9">Page 9</DropdownItem>
+                    {items.map((item) => {
+                        return (
+                            <li key={item.id}>
+                                <DropdownItem key={item.id} href={item.href}>
+                                    {item.label}
+                                </DropdownItem>
+                            </li>
+                        );
+                    })}
                 </ul>
             </div>
         </>
     );
 };
 
-const DropdownItem = ({}) => {
-    return "??";
+Dropdown.propTypes = {
+    items: PropTypes.arrayOf(
+        PropTypes.shape({
+            label: PropTypes.string,
+            href: PropTypes.string,
+            id: PropTypes.number,
+        })
+    ),
+    label: PropTypes.string,
+};
+
+const DropdownItem = ({ children, href }) => {
+    return <a href={href}>{children}</a>;
+};
+
+DropdownItem.propTypes = {
+    children: PropTypes.any,
+    href: PropTypes.string,
 };

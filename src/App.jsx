@@ -1,35 +1,20 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Dropdown } from "./components/Dropdown";
+import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0)
+    const options = [
+        { label: "Page 1", href: "/page1", id: 1 },
+        { label: "Page 2", href: "/page2", id: 2 },
+        { label: "Page 3", href: "/page3", id: 3 },
+        { label: "Page 4", href: "/page4", id: 4 },
+    ];
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    return (
+        <div>
+            <h1>Dropdown Component</h1>
+            <Dropdown label="Select a Option" items={options} />
+        </div>
+    );
 }
 
-export default App
+export default App;
