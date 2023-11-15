@@ -31,3 +31,4 @@ export const  ActiveProfiles({ profiles, onLaunchProfile }) => {
   )
 }
 
+//I would recommend to install eslint to identify problems on code
