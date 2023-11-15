@@ -85,3 +85,11 @@ DropdownItem.propTypes = {
     href: PropTypes.string,
     onSelect: PropTypes.func,
 };
+
+/* Hi Team!
+Ill like to anounce the release of our new dropdown component on the library!
+
+Features:
+- Easy to create custom selection menus
+- Syncs selection to the server
+*/
